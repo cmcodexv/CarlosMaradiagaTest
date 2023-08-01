@@ -24,4 +24,39 @@ export class TypeMysqlRepository implements TypeRepository {
 
         return null;
     }
+
+    public async findByName(nombre: string): Promise<Type | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM tipo WHERE nombre = ? AND activo = 1',
+            [nombre]
+        );
+        if (rows.length) {
+            return rows[0] as Type;
+        }
+        return null;
+    }
+
+    public async store(entry: Type): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'INSERT INTO tipo(nombre, activo, fechaCreacion) VALUES (?,?,?)',
+            [entry.nombre, 1, now]
+        );
+    }
+
+    public async update(entry: Type): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'UPDATE tipo SET nombre = ?, fechaModificacion = ? WHERE tipoId = ?',
+            [entry.nombre, now, entry.tipoId]
+        );
+    }
+    public async remove(id: number): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'UPDATE tipo SET activo = ?, fechaModificacion = ? WHERE tipoId = ?',
+            [0, now, id]
+        );
+    }
+
 }

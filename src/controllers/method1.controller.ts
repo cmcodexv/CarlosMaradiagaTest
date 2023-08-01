@@ -43,7 +43,7 @@ export class Method1Controller extends BaseController {
                             [pokemonInfo[0].tipo, pokemonRivalInfo[0].tipo]
                         );
                         if (efectividad.length) {
-                            //helper
+                            //rango
                             const rango = ((100 - 85) / 2) - 1;
                             let random: number;
                             random = 2 * Math.floor(Math.random() * rango) + 1 + 85;
