@@ -33,20 +33,26 @@ export class TypeService {
             } else {
                 throw new ApplicationException('¡Tipo ya existe!');
             }
-            
+
         } else {
             throw new ApplicationException('¡Tipo no encontrado!');
         }
 
     }
     public async remove(id: number): Promise<void> {
-        const originalEntry = await this.typeRepository.find(id);
-
-        if (originalEntry) {
-            await this.typeRepository.remove(id);
+        //verificar si tipo está vinculado a pokemon
+        const verifyType = await this.typeRepository.findByPokemonType(id);
+        if (!verifyType) {
+            const originalEntry = await this.typeRepository.find(id);
+            if (originalEntry) {
+                await this.typeRepository.remove(id);
+            } else {
+                throw new ApplicationException('¡Tipo no encontrado!');
+            }
         } else {
-            throw new ApplicationException('¡Tipo no encontrado!');
+            throw new ApplicationException("¡Tipo no puede ser eliminado ya que el pokemon " + verifyType.nombre + " lo tiene asignado!");
         }
+
     }
 
 

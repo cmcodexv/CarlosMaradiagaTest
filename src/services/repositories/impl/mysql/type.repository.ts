@@ -36,6 +36,17 @@ export class TypeMysqlRepository implements TypeRepository {
         return null;
     }
 
+    public async findByPokemonType(id: number): Promise<Type | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT pt.tipoId, p.nombre FROM pokemonTipo as pt LEFT JOIN pokemon as p ON pt.pokemonId = p.pokemonId WHERE pt.tipoId = ? AND pt.activo = 1 AND p.activo = 1',
+            [id]
+        );
+        if (rows.length) {
+            return rows[0] as Type;
+        }
+        return null;
+    }
+
     public async store(entry: Type): Promise<void> {
         const now = new Date();
         await connector.execute(

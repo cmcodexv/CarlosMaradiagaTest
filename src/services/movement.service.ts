@@ -30,7 +30,7 @@ export class MovementService {
             if (!movementDb) {
                 originalEntry.nombre = entry.nombre;
                 originalEntry.tipoId = entry.tipoId,
-                originalEntry.categoria = entry.categoria;
+                    originalEntry.categoria = entry.categoria;
                 originalEntry.poder = entry.poder;
                 originalEntry.acc = entry.acc;
                 originalEntry.pp = entry.pp;
@@ -47,13 +47,19 @@ export class MovementService {
 
     }
     public async remove(id: number): Promise<void> {
-        const originalEntry = await this.movementRepository.find(id);
-
-        if (originalEntry) {
-            await this.movementRepository.remove(id);
+        //verificar si movimiento está vinculado a pokemon
+        const verifyMovement = await this.movementRepository.findByPokemonMovement(id);
+        if (!verifyMovement) {
+            const originalEntry = await this.movementRepository.find(id);
+            if (originalEntry) {
+                await this.movementRepository.remove(id);
+            } else {
+                throw new ApplicationException('¡Movimiento no encontrado!');
+            }
         } else {
-            throw new ApplicationException('¡Tipo no encontrado!');
+            throw new ApplicationException("¡Movimiento no puede ser eliminado ya que el pokemon " + verifyMovement.nombre + " lo tiene asignado!");
         }
+
     }
 
 

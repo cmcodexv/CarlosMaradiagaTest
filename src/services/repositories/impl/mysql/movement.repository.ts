@@ -60,6 +60,17 @@ export class MovementMysqlRepository implements MovementRepository {
         return null;
     }
 
+    public async findByPokemonMovement(id: number): Promise<Movement | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT pm.movimientoId, p.nombre FROM pokemonMovimiento as pm LEFT JOIN pokemon as p ON pm.pokemonId = p.pokemonId WHERE pm.movimientoId = ? AND pm.activo = 1 AND p.activo = 1',
+            [id]
+        );
+        if (rows.length) {
+            return rows[0] as Movement;
+        }
+        return null;
+    }
+
     public async store(entry: MovementCreateDto): Promise<void> {
         const now = new Date();
         await connector.execute(
