@@ -1,7 +1,7 @@
 import connector from '../../../../common/persistence/mysql.persistence';
 import { PokemonRepository } from '../../pokemon.repository';
 import { Pokemon } from '../../domain/pokemon';
-import { MovementCreateDto } from "../../../../dtos/movement.dto";
+import { PokemonCreateDto } from "../../../../dtos/pokemon.dto";
 
 export class PokemonMysqlRepository implements PokemonRepository {
 
@@ -12,19 +12,25 @@ export class PokemonMysqlRepository implements PokemonRepository {
 
         return rows as Pokemon[];
     }
+    public async allBase(): Promise<Pokemon[]> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM pokemon WHERE activo = 1 AND base = 1;'
+        );
 
-    // public async find(id: number): Promise<Movement | null> {
-    //     const [rows]: any[] = await connector.execute(
-    //         'SELECT m.movimientoId, m.nombre, t.nombre as tipo, m.categoria, m.poder, m.acc, m.pp, m.efecto, m.probabilidad, m.activo, m.fechaCreacion, m.fechaModificacion FROM movimiento as m LEFT JOIN tipo as t ON m.tipoId = t.tipoId WHERE m.movimientoId = ? AND m.activo = 1 AND t.activo = 1',
-    //         [id]
-    //     );
+        return rows as Pokemon[];
+    }
+    public async find(id: number): Promise<Pokemon | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM pokemon WHERE activo = 1 AND base = 1 AND pokemonId = ?',
+            [id]
+        );
 
-    //     if (rows.length) {
-    //         return rows[0] as Movement;
-    //     }
+        if (rows.length) {
+            return rows[0] as Pokemon;
+        }
 
-    //     return null;
-    // }
+        return null;
+    }
     // public async findUpdate(id: number): Promise<Movement | null> {
     //     const [rows]: any[] = await connector.execute(
     //         'SELECT * FROM movimiento WHERE activo = 1 AND movimientoId = ?',
@@ -38,16 +44,16 @@ export class PokemonMysqlRepository implements PokemonRepository {
     //     return null;
     // }
 
-    // public async findByName(nombre: string): Promise<Movement | null> {
-    //     const [rows]: any[] = await connector.execute(
-    //         'SELECT * FROM movimiento WHERE nombre = ? AND activo = 1',
-    //         [nombre]
-    //     );
-    //     if (rows.length) {
-    //         return rows[0] as Movement;
-    //     }
-    //     return null;
-    // }
+    public async findByName(nombre: string): Promise<Pokemon | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM pokemon WHERE nombre = ? AND activo = 1',
+            [nombre]
+        );
+        if (rows.length) {
+            return rows[0] as Pokemon;
+        }
+        return null;
+    }
 
     // public async findByNameAndId(id: number, nombre: string): Promise<Movement | null> {
     //     const [rows]: any[] = await connector.execute(
@@ -71,13 +77,13 @@ export class PokemonMysqlRepository implements PokemonRepository {
     //     return null;
     // }
 
-    // public async store(entry: MovementCreateDto): Promise<void> {
-    //     const now = new Date();
-    //     await connector.execute(
-    //         'INSERT INTO movimiento(nombre, tipoId, categoria, poder, acc, pp, efecto, probabilidad , activo, fechaCreacion) VALUES (?,?,?,?,?,?,?,?,?,?)',
-    //         [entry.nombre, entry.tipoId, entry.categoria, entry.poder, entry.acc, entry.pp, entry.efecto, entry.probabilidad, 1, now]
-    //     );
-    // }
+    public async store(entry: PokemonCreateDto): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'INSERT INTO pokemon(nombre, nivel, saludTotal, saludActual, ataqueBase, defensaBase, ataqueEspecial, defensaEspecial, velocidad, base, activo, fechaCreacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
+            [entry.nombre, entry.nivel,entry.saludTotal, entry.saludActual, entry.ataqueBase, entry.defensaBase, entry.ataqueEspecial, entry.defensaEspecial, entry.velocidad, 1 , 1, now]
+        );
+    }
 
     // public async update(entry: Movement): Promise<void> {
     //     const now = new Date();

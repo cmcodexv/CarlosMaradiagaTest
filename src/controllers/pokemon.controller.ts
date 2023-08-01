@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { route, GET, POST, PUT, DELETE } from "awilix-express";
 import { BaseController } from "../common/controllers/base.controller";
-import { MovementCreateDto, MovementUpdateDto } from "../dtos/movement.dto";
+import { PokemonCreateDto } from "../dtos/pokemon.dto";
 import { PokemonService } from "../services/pokemon.service";
 
 
@@ -26,48 +26,64 @@ export class MovementController extends BaseController {
 
         }
     }
+    @route('/base')
+    @GET()
+    public async allBase(req: Request, res: Response) {
+        try {
+            res.send(
+                await this.pokemonService.allBase()
+            );
+
+        } catch (error) {
+            this.handleException(error, res);
+
+        }
+    }
     //find by id
-    // @route('/:id')
-    // @GET()
-    // public async find(req: Request, res: Response) {
-    //     try {
-    //         const id = parseInt(req.params.id);
-    //         const result = await this.movementService.find(id);
-    //         if (result) {
-    //             res.send(result);
-    //         } else {
-    //             res.status(404);
-    //             res.send({ status: 404, res: "¡Movimiento no existe!" });
-    //         }
+    @route('/base/:id')
+    @GET()
+    public async find(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const result = await this.pokemonService.find(id);
+            if (result) {
+                res.send(result);
+            } else {
+                res.status(404);
+                res.send({ status: 404, res: "¡Pokemon base no existe!" });
+            }
 
-    //     }
-    //     catch (error) {
-    //         this.handleException(error, res);
+        }
+        catch (error) {
+            this.handleException(error, res);
 
-    //     }
-    // }
+        }
+    }
 
     //post
-    // @POST()
-    // public async store(req: Request, res: Response) {
-    //     try {
-    //         await this.movementService.store({
-    //             nombre: req.body.nombre,
-    //             tipoId: req.body.tipoId,
-    //             categoria: req.body.categoria,
-    //             poder: req.body.poder,
-    //             acc: req.body.acc,
-    //             pp: req.body.pp,
-    //             efecto: req.body.efecto,
-    //             probabilidad: req.body.probabilidad
-    //         } as MovementCreateDto);
-    //         res.send({ status: 200, res: "¡Movimiento " + req.body.nombre + " creado correctamente!" });
-    //     }
-    //     catch (error) {
-    //         this.handleException(error, res);
+    @route('/base')
+    @POST()
+    public async store(req: Request, res: Response) {
+        try {
+            await this.pokemonService.store({
+                nombre: req.body.nombre,
+                nivel: req.body.nivel,
+                poder: req.body.poder,
+                saludTotal: req.body.saludTotal,
+                saludActual: req.body.saludActual,
+                ataqueBase: req.body.ataqueBase,
+                defensaBase: req.body.defensaBase,
+                defensaEspecial: req.body.defensaEspecial,
+                ataqueEspecial: req.body.ataqueEspecial,
+                velocidad: req.body.velocidad
+            } as PokemonCreateDto);
+            res.send({ status: 200, res: "¡Pokemon " + req.body.nombre + " (base) creado correctamente!" });
+        }
+        catch (error) {
+            this.handleException(error, res);
 
-    //     }
-    // }
+        }
+    }
     //update
     // @route('/:id')
     // @PUT()
