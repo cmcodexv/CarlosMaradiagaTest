@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { route, GET, POST, PUT, DELETE} from "awilix-express";
+import { route, GET, POST, PUT, DELETE } from "awilix-express";
 import { BaseController } from "../common/controllers/base.controller";
 import { TypeCreateDto, TypeUpdateDto } from "../dtos/type.dto";
 import { TypeService } from "../services/type.service";
@@ -39,7 +39,7 @@ export class TypeController extends BaseController {
                 res.send(result);
             } else {
                 res.status(404);
-                res.send();
+                res.send({ status: 404, res: "¡Tipo no existe!" });
             }
 
         }
@@ -49,22 +49,22 @@ export class TypeController extends BaseController {
         }
     }
 
-      //post
-      @POST()
-      public async store(req: Request, res: Response) {
-          try {
-              await this.typeService.store({
-                  nombre: req.body.nombre
-              } as TypeCreateDto);
-              res.send({status: 200, res: "¡Tipo "+req.body.nombre+" creado correctamente!" });
-          }
-          catch (error) {
-              this.handleException(error, res);
-  
-          }
-      }
+    //post
+    @POST()
+    public async store(req: Request, res: Response) {
+        try {
+            await this.typeService.store({
+                nombre: req.body.nombre
+            } as TypeCreateDto);
+            res.send({ status: 200, res: "¡Tipo " + req.body.nombre + " creado correctamente!" });
+        }
+        catch (error) {
+            this.handleException(error, res);
 
-          //update
+        }
+    }
+
+    //update
     @route('/:id')
     @PUT()
     public async update(req: Request, res: Response) {
@@ -74,7 +74,7 @@ export class TypeController extends BaseController {
                 nombre: req.body.nombre
             } as TypeUpdateDto);
 
-            res.send({status: 200, res: "¡Tipo actualizado correctamente!"});
+            res.send({ status: 200, res: "¡Tipo actualizado correctamente!" });
 
         }
         catch (error) {
@@ -82,23 +82,23 @@ export class TypeController extends BaseController {
 
         }
     }
-      //delete
-      @route('/:id')
-      @DELETE()
-      public async remove(req: Request, res: Response) {
-          try {
-              const id = parseInt(req.params.id);
-  
-              await this.typeService.remove(id);
-  
-              res.send({status: 200, res: "¡Tipo eliminado correctamente!"});
-          }
-          catch (error) {
-              this.handleException(error, res);
-  
-          }
-  
-      }
+    //delete
+    @route('/:id')
+    @DELETE()
+    public async remove(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+
+            await this.typeService.remove(id);
+
+            res.send({ status: 200, res: "¡Tipo eliminado correctamente!" });
+        }
+        catch (error) {
+            this.handleException(error, res);
+
+        }
+
+    }
 
 
 
