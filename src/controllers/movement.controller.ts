@@ -93,22 +93,22 @@ export class MovementController extends BaseController {
 
         }
     }
-        //delete
-        @route('/:id')
-        @DELETE()
-        public async remove(req: Request, res: Response) {
-            try {
-                const id = parseInt(req.params.id);
-    
-                await this.movementService.remove(id);
-    
-                res.send({ status: 200, res: "¡Movimiento eliminado correctamente!" });
-            }
-            catch (error) {
-                this.handleException(error, res);
-    
-            }
-    
+    //delete
+    @route('/:id')
+    @DELETE()
+    public async remove(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+
+            await this.movementService.remove(id);
+
+            res.send({ status: 200, res: "¡Movimiento eliminado correctamente!" });
         }
+        catch (error) {
+            this.handleException(error, res);
+
+        }
+
+    }
 
 }

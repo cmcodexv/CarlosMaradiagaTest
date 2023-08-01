@@ -5,6 +5,8 @@ import { TypeMysqlRepository } from './services/repositories/impl/mysql/type.rep
 import { TypeService } from './services/type.service';
 import { MovementMysqlRepository } from './services/repositories/impl/mysql/movement.repository';
 import { MovementService } from './services/movement.service';
+import { PokemonMysqlRepository } from './services/repositories/impl/mysql/pokemon.repository';
+import { PokemonService } from './services/pokemon.service';
 
 export default (app: express.Application) => {
     const container = createContainer({
@@ -14,9 +16,11 @@ export default (app: express.Application) => {
         // repositories
         typeRepository: asClass(TypeMysqlRepository).scoped(),
         movementRepository: asClass(MovementMysqlRepository).scoped(),
+        pokemonRepository: asClass(PokemonMysqlRepository).scoped(),
         // services
         typeService: asClass(TypeService).scoped(),
-        movementService: asClass(MovementService).scoped()
+        movementService: asClass(MovementService).scoped(),
+        pokemonService: asClass(PokemonService).scoped()
 
     });
     app.use(scopePerRequest(container));
