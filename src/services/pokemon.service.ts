@@ -1,7 +1,7 @@
 import { PokemonRepository } from "./repositories/pokemon.repository";
 import { Pokemon } from "./repositories/domain/pokemon";
 import { ApplicationException } from "../common/exceptions/application.exception";
-import { PokemonCreateDto } from "../dtos/pokemon.dto";
+import { PokemonCreateDto, PokemonUpdateDto } from "../dtos/pokemon.dto";
 
 export class PokemonService {
     constructor(
@@ -25,45 +25,41 @@ export class PokemonService {
             throw new ApplicationException('¡Pokemon ya existe!');
         }
     }
-    // public async update(id: number, entry: MovementUpdateDto): Promise<void> {
-    //     const originalEntry = await this.movementRepository.findUpdate(id);
-    //     if (originalEntry) {
-    //         //verificar nombre repetido
-    //         const movementDb = await this.movementRepository.findByNameAndId(id, entry.nombre);
-    //         if (!movementDb) {
-    //             originalEntry.nombre = entry.nombre;
-    //             originalEntry.tipoId = entry.tipoId,
-    //                 originalEntry.categoria = entry.categoria;
-    //             originalEntry.poder = entry.poder;
-    //             originalEntry.acc = entry.acc;
-    //             originalEntry.pp = entry.pp;
-    //             originalEntry.efecto = entry.efecto;
-    //             originalEntry.probabilidad = entry.probabilidad;
-    //             await this.movementRepository.update(originalEntry);
-    //         } else {
-    //             throw new ApplicationException('¡Movimiento ya existe!');
-    //         }
+    public async update(id: number, entry: PokemonUpdateDto): Promise<void> {
+        const originalEntry = await this.pokemonRepository.findUpdate(id);
+        if (originalEntry) {
+            //verificar nombre repetido
+            const movementDb = await this.pokemonRepository.findByNameAndId(id, entry.nombre);
+            if (!movementDb) {
+                originalEntry.nombre = entry.nombre,
+                originalEntry.nivel = entry.nivel,
+                originalEntry.saludTotal = entry.saludTotal,
+                originalEntry.saludActual = entry.saludActual,
+                originalEntry.ataqueBase = entry.ataqueBase,
+                originalEntry.defensaBase = entry.defensaBase,
+                originalEntry.defensaEspecial = entry.defensaEspecial,
+                originalEntry.ataqueEspecial = entry.ataqueEspecial,
+                originalEntry.velocidad = entry.velocidad
+                await this.pokemonRepository.update(originalEntry);
+            } else {
+                throw new ApplicationException('¡Pokemon base ya existe!');
+            }
 
-    //     } else {
-    //         throw new ApplicationException('¡Movimiento no encontrado!');
-    //     }
+        } else {
+            throw new ApplicationException('¡Pokemon base no encontrado!');
+        }
 
-    // }
-    // public async remove(id: number): Promise<void> {
-    //     //verificar si movimiento está vinculado a pokemon
-    //     const verifyMovement = await this.movementRepository.findByPokemonMovement(id);
-    //     if (!verifyMovement) {
-    //         const originalEntry = await this.movementRepository.find(id);
-    //         if (originalEntry) {
-    //             await this.movementRepository.remove(id);
-    //         } else {
-    //             throw new ApplicationException('¡Movimiento no encontrado!');
-    //         }
-    //     } else {
-    //         throw new ApplicationException("¡Movimiento no puede ser eliminado ya que el pokemon " + verifyMovement.nombre + " lo tiene asignado!");
-    //     }
+    }
+    public async remove(id: number): Promise<void> {
 
-    // }
+            const originalEntry = await this.pokemonRepository.findUpdate(id);
+            if (originalEntry) {
+                await this.pokemonRepository.remove(id);
+            } else {
+                throw new ApplicationException('¡Pokemon no encontrado!');
+            }
+        
+    }
 
 
 }

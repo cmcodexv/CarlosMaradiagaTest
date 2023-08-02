@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { route, GET, POST, PUT, DELETE } from "awilix-express";
 import { BaseController } from "../common/controllers/base.controller";
-import { PokemonCreateDto } from "../dtos/pokemon.dto";
+import { PokemonCreateDto, PokemonUpdateDto } from "../dtos/pokemon.dto";
 import { PokemonService } from "../services/pokemon.service";
 
 
@@ -68,7 +68,6 @@ export class MovementController extends BaseController {
             await this.pokemonService.store({
                 nombre: req.body.nombre,
                 nivel: req.body.nivel,
-                poder: req.body.poder,
                 saludTotal: req.body.saludTotal,
                 saludActual: req.body.saludActual,
                 ataqueBase: req.body.ataqueBase,
@@ -85,46 +84,47 @@ export class MovementController extends BaseController {
         }
     }
     //update
-    // @route('/:id')
-    // @PUT()
-    // public async update(req: Request, res: Response) {
-    //     try {
-    //         const id = parseInt(req.params.id);
-    //         await this.movementService.update(id, {
-    //             nombre: req.body.nombre,
-    //             tipoId: req.body.tipoId,
-    //             categoria: req.body.categoria,
-    //             poder: req.body.poder,
-    //             acc: req.body.acc,
-    //             pp: req.body.pp,
-    //             efecto: req.body.efecto,
-    //             probabilidad: req.body.probabilidad
-    //         } as MovementUpdateDto);
+    @route('/base/:id')
+    @PUT()
+    public async update(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            await this.pokemonService.update(id, {
+                nombre: req.body.nombre,
+                nivel: req.body.nivel,
+                saludTotal: req.body.saludTotal,
+                saludActual: req.body.saludActual,
+                ataqueBase: req.body.ataqueBase,
+                defensaBase: req.body.defensaBase,
+                defensaEspecial: req.body.defensaEspecial,
+                ataqueEspecial: req.body.ataqueEspecial,
+                velocidad: req.body.velocidad
+            } as PokemonUpdateDto);
 
-    //         res.send({ status: 200, res: "¡Movimiento actualizado correctamente!" });
+            res.send({ status: 200, res: "¡Pokemon base actualizado correctamente!" });
 
-    //     }
-    //     catch (error) {
-    //         this.handleException(error, res);
+        }
+        catch (error) {
+            this.handleException(error, res);
 
-    //     }
-    // }
+        }
+    }
     //delete
-    // @route('/:id')
-    // @DELETE()
-    // public async remove(req: Request, res: Response) {
-    //     try {
-    //         const id = parseInt(req.params.id);
+    @route('/base/:id')
+    @DELETE()
+    public async remove(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
 
-    //         await this.movementService.remove(id);
+            await this.pokemonService.remove(id);
 
-    //         res.send({ status: 200, res: "¡Movimiento eliminado correctamente!" });
-    //     }
-    //     catch (error) {
-    //         this.handleException(error, res);
+            res.send({ status: 200, res: "¡Pokemon eliminado correctamente!" });
+        }
+        catch (error) {
+            this.handleException(error, res);
 
-    //     }
+        }
 
-    // }
+    }
 
 }

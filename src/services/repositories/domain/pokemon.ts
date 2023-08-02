@@ -3,12 +3,12 @@ export interface Pokemon {
     nombre: string;
     tipos?: [];
     movimientos?: [];
-    tipoId?: number | null;
     nivel: number;
-    poder: number;
+    saludTotal: number;
     saludActual: number;
     ataqueBase: number;
-    defensaBase: number 
+    defensaBase: number;
+    defensaEspecial: number;
     ataqueEspecial: number;
     velocidad: number;
     activo?: number;

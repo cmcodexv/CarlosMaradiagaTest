@@ -16,19 +16,22 @@ interface PokemonCreateDto {
 
 }
 
-interface MovementUpdateDto {
+interface PokemonUpdateDto {
     nombre: string;
-    tipoId: number;
-    categoria: string | null;
-    poder: number | null;
-    acc: number | null;
-    pp: number | null;
-    efecto: string | null;
-    probabilidad: number | null;
+    nivel: number;
+    poder: number;
+    saludTotal: number;
+    saludActual: number;
+    ataqueBase: number;
+    defensaBase: number;
+    defensaEspecial: number;
+    ataqueEspecial: number;
+    velocidad: number;
 }
 
 
 
 export {
-    PokemonCreateDto
+    PokemonCreateDto,
+    PokemonUpdateDto
 };

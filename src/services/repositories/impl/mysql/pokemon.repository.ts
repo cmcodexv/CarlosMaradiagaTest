@@ -31,18 +31,18 @@ export class PokemonMysqlRepository implements PokemonRepository {
 
         return null;
     }
-    // public async findUpdate(id: number): Promise<Movement | null> {
-    //     const [rows]: any[] = await connector.execute(
-    //         'SELECT * FROM movimiento WHERE activo = 1 AND movimientoId = ?',
-    //         [id]
-    //     );
+    public async findUpdate(id: number): Promise<Pokemon | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT * FROM pokemon WHERE activo = 1 AND pokemonId = ? AND base = 1',
+            [id]
+        );
 
-    //     if (rows.length) {
-    //         return rows[0] as Movement;
-    //     }
+        if (rows.length) {
+            return rows[0] as Pokemon;
+        }
 
-    //     return null;
-    // }
+        return null;
+    }
 
     public async findByName(nombre: string): Promise<Pokemon | null> {
         const [rows]: any[] = await connector.execute(
@@ -55,49 +55,39 @@ export class PokemonMysqlRepository implements PokemonRepository {
         return null;
     }
 
-    // public async findByNameAndId(id: number, nombre: string): Promise<Movement | null> {
-    //     const [rows]: any[] = await connector.execute(
-    //         'SELECT * FROM movimiento WHERE nombre = ? AND activo = 1  AND movimientoId != ?',
-    //         [nombre, id]
-    //     );
-    //     if (rows.length) {
-    //         return rows[0] as Movement;
-    //     }
-    //     return null;
-    // }
-
-    // public async findByPokemonMovement(id: number): Promise<Movement | null> {
-    //     const [rows]: any[] = await connector.execute(
-    //         'SELECT pm.movimientoId, p.nombre FROM pokemonMovimiento as pm LEFT JOIN pokemon as p ON pm.pokemonId = p.pokemonId WHERE pm.movimientoId = ? AND pm.activo = 1 AND p.activo = 1',
-    //         [id]
-    //     );
-    //     if (rows.length) {
-    //         return rows[0] as Movement;
-    //     }
-    //     return null;
-    // }
+    public async findByNameAndId(id: number, nombre: string): Promise<Pokemon | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT nombre FROM pokemon WHERE nombre = ? AND activo = 1 AND base = 1 AND pokemonId != ?',
+            [nombre, id]
+        );
+        if (rows.length) {
+            return rows[0] as Pokemon;
+        }
+        return null;
+    }
 
     public async store(entry: PokemonCreateDto): Promise<void> {
         const now = new Date();
         await connector.execute(
             'INSERT INTO pokemon(nombre, nivel, saludTotal, saludActual, ataqueBase, defensaBase, ataqueEspecial, defensaEspecial, velocidad, base, activo, fechaCreacion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
-            [entry.nombre, entry.nivel,entry.saludTotal, entry.saludActual, entry.ataqueBase, entry.defensaBase, entry.ataqueEspecial, entry.defensaEspecial, entry.velocidad, 1 , 1, now]
+            [entry.nombre, entry.nivel, entry.saludTotal, entry.saludActual, entry.ataqueBase, entry.defensaBase, entry.ataqueEspecial, entry.defensaEspecial, entry.velocidad, 1, 1, now]
         );
     }
 
-    // public async update(entry: Movement): Promise<void> {
-    //     const now = new Date();
-    //     await connector.execute(
-    //         'UPDATE movimiento SET nombre = ?, tipoId = ?, categoria = ?, poder = ?, acc = ?, pp = ?, efecto = ?, probabilidad = ?, fechaModificacion = ? WHERE movimientoId = ?',
-    //         [entry.nombre, entry.tipoId, entry.categoria, entry.poder, entry.acc, entry.pp, entry.efecto, entry.probabilidad, now, entry.movimientoId]
-    //     );
-    // }
-    // public async remove(id: number): Promise<void> {
-    //     const now = new Date();
-    //     await connector.execute(
-    //         'UPDATE movimiento SET activo = ?, fechaModificacion = ? WHERE movimientoId = ?',
-    //         [0, now, id]
-    //     );
-    // }
+    public async update(entry: Pokemon): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'UPDATE pokemon SET nombre = ?, saludActual = ?, nivel = ?, saludTotal = ?, ataqueBase = ?, defensaBase = ?, defensaEspecial = ?, ataqueEspecial = ?, velocidad = ?, fechaModificacion = ? WHERE pokemonId = ?',
+            [entry.nombre, entry.saludActual, entry.nivel, entry.saludTotal, entry.ataqueBase, entry.defensaBase, entry.defensaEspecial, entry.ataqueEspecial, entry.velocidad, now, entry.pokemonId]
+        );
+    }
+
+    public async remove(id: number): Promise<void> {
+        const now = new Date();
+        await connector.execute(
+            'UPDATE pokemon SET activo = ?, fechaModificacion = ? WHERE pokemonId = ?',
+            [0, now, id]
+        );
+    }
 
 }
