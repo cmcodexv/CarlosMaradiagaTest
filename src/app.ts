@@ -16,7 +16,6 @@ import express from 'express';
 import loadContainer from './container';
 import { loadControllers } from 'awilix-express';
 import { jsonSwagger } from './docs/basicInfo';
-import { expressjwt } from "express-jwt";
 
 const app: express.Application = express();
 

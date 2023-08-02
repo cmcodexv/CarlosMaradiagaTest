@@ -114,7 +114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"nombre\": \"Prueba\"\n}",
+									"raw": "{\n    \"nombre\": \"PruebaMod\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -141,14 +141,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:3000/types/1",
+									"raw": "localhost:3000/types/7",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
 										"types",
-										"1"
+										"7"
 									]
 								}
 							},
@@ -279,92 +279,174 @@
 					"name": "Pokemons",
 					"item": [
 						{
-							"name": "All Pokemons (Ready to fight)",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:3000/pokemons",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"pokemons"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "All Pokemons (Base)",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:3000/pokemons/base",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"pokemons",
-										"base"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Pokemon Base by Id",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:3000/pokemons/base/3",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"pokemons",
-										"base",
-										"3"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Save Pokemon Base",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n     \"nombre\": \"PokemonBased\",\n     \"nivel\": 7,\n    \"poder\": 1,\n    \"saludTotal\": 10,\n    \"saludActual\": 2,\n    \"ataqueBase\": 3,\n    \"defensaBase\": 4,\n    \"ataqueEspecial\": 5,\n    \"defensaEspecial\": 8,\n    \"velocidad\": 6\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+							"name": "Base",
+							"item": [
+								{
+									"name": "All Pokemons (Base)",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/pokemons/base",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"base"
+											]
 										}
-									}
+									},
+									"response": []
 								},
-								"url": {
-									"raw": "localhost:3000/pokemons/base",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"pokemons",
-										"base"
-									]
+								{
+									"name": "Save Pokemon Base",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n     \"nombre\": \"PokemonBased\",\n     \"nivel\": 7,\n    \"saludTotal\": 10,\n    \"saludActual\": 2,\n    \"ataqueBase\": 3,\n    \"defensaBase\": 4,\n    \"ataqueEspecial\": 5,\n    \"defensaEspecial\": 8,\n    \"velocidad\": 6\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:3000/pokemons/base",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"base"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit Pokemon Base",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n     \"nombre\": \"PokemonEdit\",\n     \"nivel\": 1,\n    \"saludActual\": 2,\n    \"saludTotal\": 3,\n    \"ataqueBase\": 4,\n    \"defensaBase\": 5,\n    \"ataqueEspecial\": 6,\n    \"defensaEspecial\": 7,\n    \"velocidad\": 8\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:3000/pokemons/base/3",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"base",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Pokemon Base by Id",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/pokemons/base/3",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"base",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove Pokemon Base",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/pokemons/base/4",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"base",
+												"4"
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
+						},
+						{
+							"name": "With Type and Movements",
+							"item": [
+								{
+									"name": "All Pokemons (Ready to fight)",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/pokemons",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Types and Movements  by Pokemon Id (Ready to fight)",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:3000/pokemons/typeMovementById/2",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"pokemons",
+												"typeMovementById",
+												"2"
+											]
+										}
+									},
+									"response": []
+								}
+							]
 						}
 					]
 				}
