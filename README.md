@@ -44,6 +44,7 @@ A continuación detallo algunas observaciones que considero importante aclarar y
 - Hubiera estado genial hacer la configuración de Docker para también tener NodeJS dentro.
 - Usé MySQL ya que lo tenía a mano, sin embarho usar MongoDB daría la ventaja de usar el MEAN STACK, pensando en la escabilidad de usar Angular como frontend.
 - Las tablas "pokemonMovimiento" y "pokemonTipo" las hice de tipo detalle para que un pokémon pueda tener muchos movimientos(Dependiendo de su tipo) y ser a la vez de muchos tipos.
+- El método de la parte 1 lo hice dentro del controlador ya que me enfoqué más en la lógica y no lo acoplé a la estructura, aunque lo ideal sería hacer un procedimiento almacenado que calcule el daño.
 - Los endpoints los hice de una manera pensando que un frontend hará la petición, de esta manera se deben considerar que en el mismo pueden haber combobox e información filtrada para evitar errores. Por ejemplo: Un pokémon no puede usar movimientos que no sean de su tipo, la salud actual no puede ser mayor que la total, etc. 
 - Consideré que un pokemon base es el que aún no tiene tipo y movimientos, por cuestiones de tiempo no hice endpoints para asignarlos y de esta manera pasen a ser fase final (Ready to fight), hay dos de este tipo pero los ingresé directo en la base de datos.
 - Ingresé los datos que consideré necesarios para la prueba.
