@@ -24,7 +24,7 @@ $ npm install
 ```sh
 $ npm run start:dev
 ```
-- Por cuestiones de tiempo no pude terminar la documentación con [Swagger](https://swagger.io/), sin embargo la colección de consultas para [Postman](https://www.postman.com/) se encuentran en la carpeta "postman".
+- Por cuestiones de tiempo no pude terminar la documentación con [Swagger](https://swagger.io/): http://localhost:3000/api-docs/, sin embargo la colección de consultas para [Postman](https://www.postman.com/) se encuentran en la carpeta "postman".
 - Impotar la configuración del punto anterior en [Postman](https://www.postman.com/).
 - He definido la ruta: http://localhost:3000/check para verificar si el proyecto está corriendo.
 
