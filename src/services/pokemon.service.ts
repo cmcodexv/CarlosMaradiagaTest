@@ -1,7 +1,7 @@
 import { PokemonRepository } from "./repositories/pokemon.repository";
 import { Pokemon } from "./repositories/domain/pokemon";
 import { ApplicationException } from "../common/exceptions/application.exception";
-import { PokemonCreateDto, PokemonUpdateDto } from "../dtos/pokemon.dto";
+import { PokemonCreateDto, PokemonUpdateDto, PokemonTypeMovement } from "../dtos/pokemon.dto";
 
 export class PokemonService {
     constructor(
@@ -16,6 +16,9 @@ export class PokemonService {
     }
     public async find(id: number): Promise<Pokemon | null> {
         return this.pokemonRepository.find(id);
+    }
+    public async typeMovementById(id: number): Promise<PokemonTypeMovement | null> {
+        return this.pokemonRepository.typeMovementById(id);
     }
     public async store(entry: PokemonCreateDto): Promise<void> {
         const originalEntry = await this.pokemonRepository.findByName(entry.nombre);

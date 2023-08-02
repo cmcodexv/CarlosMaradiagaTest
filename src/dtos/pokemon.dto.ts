@@ -28,10 +28,16 @@ interface PokemonUpdateDto {
     ataqueEspecial: number;
     velocidad: number;
 }
-
+interface PokemonTypeMovement {
+    pokemonId: number;
+    nombre: string;
+    tipos?: [];
+    movimientos?: [];
+}
 
 
 export {
     PokemonCreateDto,
-    PokemonUpdateDto
+    PokemonUpdateDto,
+    PokemonTypeMovement
 };

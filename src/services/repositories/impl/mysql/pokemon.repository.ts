@@ -1,7 +1,7 @@
 import connector from '../../../../common/persistence/mysql.persistence';
 import { PokemonRepository } from '../../pokemon.repository';
 import { Pokemon } from '../../domain/pokemon';
-import { PokemonCreateDto } from "../../../../dtos/pokemon.dto";
+import { PokemonCreateDto, PokemonTypeMovement } from "../../../../dtos/pokemon.dto";
 
 export class PokemonMysqlRepository implements PokemonRepository {
 
@@ -18,6 +18,19 @@ export class PokemonMysqlRepository implements PokemonRepository {
         );
 
         return rows as Pokemon[];
+    }
+
+    public async typeMovementById(id: number): Promise<PokemonTypeMovement | null> {
+        const [rows]: any[] = await connector.execute(
+            'SELECT p.pokemonId, p.nombre, GROUP_CONCAT(t.nombre) AS tipos, GROUP_CONCAT(m.nombre) AS movimientos FROM pokemon p JOIN pokemonTipo pt ON p.pokemonId = pt.pokemonId JOIN tipo t ON pt.tipoId = t.tipoId JOIN pokemonMovimiento pm ON p.pokemonId = pm.pokemonId JOIN movimiento m ON pm.movimientoId = m.movimientoId WHERE p.pokemonId = ? AND p.activo = 1 AND pt.activo = 1 AND t.activo = 1 AND pm.activo = 1 AND m.activo = 1 GROUP BY p.pokemonId, p.nombre;',
+            [id]
+        );
+
+        if (rows.length) {
+            return rows[0] as PokemonTypeMovement;
+        }
+
+        return null;
     }
     public async find(id: number): Promise<Pokemon | null> {
         const [rows]: any[] = await connector.execute(

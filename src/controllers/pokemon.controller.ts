@@ -60,6 +60,27 @@ export class MovementController extends BaseController {
         }
     }
 
+    //find by id
+    @route('/typeMovementById/:id')
+    @GET()
+    public async findTypeMovement(req: Request, res: Response) {
+        try {
+            const id = parseInt(req.params.id);
+            const result = await this.pokemonService.typeMovementById(id);
+            if (result) {
+                res.send(result);
+            } else {
+                res.status(404);
+                res.send({ status: 404, res: "¡Pokemon no existe o aún se encuentra en modo base!" });
+            }
+
+        }
+        catch (error) {
+            this.handleException(error, res);
+
+        }
+    }
+
     //post
     @route('/base')
     @POST()
